@@ -5,8 +5,10 @@ const app = express();
 app.use(express.json());
 
 const usuariosRoutes = require("./routes/usuarios.routes");
+const laboratoriosRoutes = require("./routes/laboratorios.routes");
 
 app.use("/usuarios", usuariosRoutes);
+app.use("/laboratorios", laboratoriosRoutes);
 
 app.get("/", (req, res) => {
     res.json({
