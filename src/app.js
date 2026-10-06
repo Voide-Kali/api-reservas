@@ -6,11 +6,11 @@ app.use(express.json());
 
 const usuariosRoutes = require("./routes/usuarios.routes");
 const laboratoriosRoutes = require("./routes/laboratorios.routes");
-const reservasRoutes = require("./routes/reservas.routes");
+const equipamentosRoutes = require("./routes/equipamentos.routes");
 
 app.use("/usuarios", usuariosRoutes);
 app.use("/laboratorios", laboratoriosRoutes);
-app.use("/reservas", reservasRoutes);
+app.use("/equipamentos", equipamentosRoutes);
 
 app.get("/", (req, res) => {
     res.json({
