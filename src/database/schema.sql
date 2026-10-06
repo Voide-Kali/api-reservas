@@ -33,11 +33,15 @@ CREATE TABLE IF NOT EXISTS reservas (
         CHECK (status IN ('PENDENTE', 'APROVADA', 'RECUSADA', 'CANCELADA')),
 
     motivo TEXT,
+
+    aprovado_por INTEGER,
+
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (laboratorio_id) REFERENCES laboratorios(id),
     FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id),
+    FOREIGN KEY (aprovado_por) REFERENCES usuarios(id),
 
     CHECK (laboratorio_id IS NOT NULL OR equipamento_id IS NOT NULL),
     CHECK (inicio < fim)
