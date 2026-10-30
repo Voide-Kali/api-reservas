@@ -1,152 +1,157 @@
 # API de Reserva de Laboratórios e Equipamentos
 
-## Descrição
+## 1. Descrição do projeto
 
-A API foi desenvolvida para organizar e gerenciar reservas de laboratórios e equipamentos de uma instituição.
+A API de Reserva de Laboratórios e Equipamentos foi desenvolvida para gerenciar os recursos de uma instituição de ensino. O sistema permite cadastrar, consultar, atualizar e excluir usuários, laboratórios e equipamentos.
 
-O sistema permite o cadastro e gerenciamento de usuários e laboratórios, além da criação e consulta de reservas. As reservas possuem regras para evitar conflitos de horários entre recursos e usuários.
+A aplicação utiliza uma API REST para receber requisições HTTP e retornar informações em formato JSON. Os dados são armazenados em um banco de dados SQLite.
 
-A API foi desenvolvida utilizando Node.js, Express e um banco de dados para armazenamento das informações.
+## 2. Objetivo
 
-## Objetivo
+O objetivo do projeto é facilitar a organização dos recursos institucionais, centralizando o gerenciamento de usuários, laboratórios e equipamentos em uma única aplicação.
 
-O objetivo do projeto é facilitar o controle dos recursos da instituição, permitindo que usuários realizem solicitações de reserva de laboratórios ou equipamentos e evitando conflitos de horários.
+## 3. Tecnologias utilizadas
 
-## Entidades
+- Node.js
+- Express
+- JavaScript
+- SQLite
+- better-sqlite3
+- API REST
+- JSON
+- Nodemon
 
-O sistema possui as seguintes entidades principais:
+## 4. Funcionalidades implementadas
 
-* Usuários
-* Laboratórios
-* Equipamentos
-* Reservas
+### Usuários
 
-## Funcionalidades
+- Listar todos os usuários.
+- Consultar um usuário pelo ID.
+- Cadastrar um usuário.
+- Atualizar os dados de um usuário.
+- Excluir um usuário.
 
-Atualmente, a API possui as seguintes funcionalidades:
+### Laboratórios
 
-* Listar usuários;
-* Buscar usuário por ID;
-* Cadastrar usuários;
-* Atualizar usuários;
-* Deletar usuários;
-* Listar laboratórios;
-* Buscar laboratório por ID;
-* Cadastrar laboratórios;
-* Atualizar laboratórios;
-* Deletar laboratórios;
-* Listar reservas;
-* Buscar reserva por ID;
-* Criar reservas.
+- Listar todos os laboratórios.
+- Consultar um laboratório pelo ID.
+- Cadastrar um laboratório.
+- Atualizar os dados de um laboratório.
+- Excluir um laboratório.
 
-O controller de reservas também possui funções para aprovação, recusa e cancelamento de reservas, porém essas funções ainda não estão registradas no arquivo de rotas atual.
+### Equipamentos
 
-## Tecnologias utilizadas
+- Listar todos os equipamentos.
+- Consultar um equipamento pelo ID.
+- Cadastrar um equipamento.
+- Atualizar os dados de um equipamento.
+- Excluir um equipamento.
 
-* Node.js
-* Express
-* JavaScript
-* SQLite
-* REST API
-* JSON
+**Observação:** embora o projeto tenha como tema a reserva de laboratórios e equipamentos, o arquivo principal `src/app.js` ainda não registra as rotas de reservas. Por isso, os endpoints de reservas não são apresentados como funcionalidades acessíveis nesta versão.
 
-## Instalação
+## 5. Requisitos
 
-### Pré-requisitos
+Para executar o projeto, é necessário ter instalado:
 
-É necessário possuir o Node.js e o npm instalados.
+- Node.js
+- npm
 
-Para verificar se estão instalados:
+Para verificar as versões instaladas, execute:
 
 ```bash
 node --version
 npm --version
 ```
 
-### Clonar o projeto
+## 6. Instalação
+
+Clone o repositório:
 
 ```bash
-git clone https://github.com/lorenaamaral123/PTAC-trabalho.git
+git clone https://github.com/Voide-Kali/api-reservas.git
 ```
 
-Entrar na pasta do projeto:
+Entre na pasta do projeto:
 
 ```bash
-cd PTAC-trabalho
+cd api-reservas
 ```
 
-### Instalar as dependências
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-## Execução
+## 7. Execução
 
-Para iniciar a aplicação, utilize o comando definido no `package.json`.
+Para iniciar o servidor em modo de desenvolvimento, utilize:
 
-Caso o projeto utilize o script `start`:
+```bash
+npm run dev
+```
+
+Para iniciar a aplicação normalmente, utilize:
 
 ```bash
 npm start
 ```
 
-Caso o servidor seja iniciado diretamente pelo arquivo principal:
+O servidor está configurado para utilizar a porta `3000`.
 
-```bash
-node server.js
+Endereço local:
+
+```text
+http://localhost:3000
 ```
 
-A porta e o endereço utilizados pela aplicação dependem da configuração do servidor.
+Ao acessar a rota inicial `GET /`, a API retorna uma mensagem indicando que está funcionando.
 
-## Rotas
-
-As rotas são organizadas em três grupos:
-
-* Usuários
-* Laboratórios
-* Reservas
-
-O prefixo utilizado por cada grupo depende da configuração do arquivo principal da aplicação.
-
-### Usuários
-
-As rotas de usuários estão definidas no arquivo `usuarios.routes.js`.
-
-#### Listar usuários
-
-```http
-GET /usuarios
-```
-
-Retorna todos os usuários cadastrados.
-
-#### Buscar usuário
-
-```http
-GET /usuarios/:id
-```
-
-Exemplo:
-
-```http
-GET /usuarios/1
-```
-
-Retorna o usuário correspondente ao ID informado.
-
-Caso o usuário não seja encontrado, a API retorna:
+Exemplo de resposta:
 
 ```json
 {
-  "erro": "Usuário não encontrado"
+  "mensagem": "API de reservas funcionando"
 }
 ```
 
+## 8. Endpoints da API
+
+Os endpoints abaixo correspondem às rotas registradas em `src/app.js`.
+
+| Método HTTP | Endpoint | Descrição |
+|---|---|---|
+| GET | `/` | Verifica se a API está funcionando |
+| GET | `/usuarios` | Lista os usuários |
+| GET | `/usuarios/:id` | Busca um usuário pelo ID |
+| POST | `/usuarios` | Cadastra um usuário |
+| PUT | `/usuarios/:id` | Atualiza um usuário |
+| DELETE | `/usuarios/:id` | Exclui um usuário |
+| GET | `/laboratorios` | Lista os laboratórios |
+| GET | `/laboratorios/:id` | Busca um laboratório pelo ID |
+| POST | `/laboratorios` | Cadastra um laboratório |
+| PUT | `/laboratorios/:id` | Atualiza um laboratório |
+| DELETE | `/laboratorios/:id` | Exclui um laboratório |
+| GET | `/equipamentos` | Lista os equipamentos |
+| GET | `/equipamentos/:id` | Busca um equipamento pelo ID |
+| POST | `/equipamentos` | Cadastra um equipamento |
+| PUT | `/equipamentos/:id` | Atualiza um equipamento |
+| DELETE | `/equipamentos/:id` | Exclui um equipamento |
+
+O parâmetro `:id` deve ser substituído pelo identificador do recurso desejado. Por exemplo, `/equipamentos/1` consulta o equipamento de ID 1.
+
+## 9. Exemplos de requisições
+
+### 9.1. Usuários
+
 #### Cadastrar usuário
 
-```http
-POST /usuarios
+Método: `POST`
+
+Endpoint:
+
+```text
+/usuarios
 ```
 
 Corpo da requisição:
@@ -161,24 +166,36 @@ Corpo da requisição:
 
 Os campos `nome`, `email` e `perfil` são obrigatórios.
 
-Caso algum campo não seja informado:
+#### Listar usuários
 
-```json
-{
-  "erro": "Nome, email e perfil são obrigatórios"
-}
+Método: `GET`
+
+Endpoint:
+
+```text
+/usuarios
+```
+
+Retorna uma lista dos usuários cadastrados.
+
+#### Consultar usuário por ID
+
+Método: `GET`
+
+Endpoint de exemplo:
+
+```text
+/usuarios/1
 ```
 
 #### Atualizar usuário
 
-```http
-PUT /usuarios/:id
-```
+Método: `PUT`
 
-Exemplo:
+Endpoint de exemplo:
 
-```http
-PUT /usuarios/1
+```text
+/usuarios/1
 ```
 
 Corpo da requisição:
@@ -191,67 +208,37 @@ Corpo da requisição:
 }
 ```
 
-Os campos `nome`, `email` e `perfil` são obrigatórios.
+Os campos obrigatórios devem ser enviados novamente.
 
-#### Deletar usuário
+#### Excluir usuário
 
-```http
-DELETE /usuarios/:id
+Método: `DELETE`
+
+Endpoint de exemplo:
+
+```text
+/usuarios/1
 ```
 
-Exemplo:
+Quando a exclusão é realizada com sucesso, a API retorna o status HTTP `204 No Content`.
 
-```http
-DELETE /usuarios/1
-```
+### 9.2. Laboratórios
 
-Quando a exclusão é realizada com sucesso, a API retorna o status `204 No Content`.
+#### Cadastrar laboratório
 
----
+Método: `POST`
 
-## Laboratórios
+Endpoint:
 
-As rotas de laboratórios estão definidas no arquivo `laboratorios.route.js`.
-
-### Listar laboratórios
-
-```http
-GET /laboratorios
-```
-
-Retorna todos os laboratórios cadastrados.
-
-### Buscar laboratório
-
-```http
-GET /laboratorios/:id
-```
-
-Exemplo:
-
-```http
-GET /laboratorios/1
-```
-
-Caso o laboratório não seja encontrado:
-
-```json
-{
-  "erro": "Laboratório não encontrado"
-}
-```
-
-### Cadastrar laboratório
-
-```http
-POST /laboratorios
+```text
+/laboratorios
 ```
 
 Corpo da requisição:
 
 ```json
 {
-  "nome": "Laboratório 01",
+  "nome": "Laboratório de Informática",
   "localizacao": "Bloco A",
   "capacidade": 30
 }
@@ -259,163 +246,151 @@ Corpo da requisição:
 
 Os campos `nome`, `localizacao` e `capacidade` são obrigatórios.
 
-### Atualizar laboratório
+#### Listar laboratórios
 
-```http
-PUT /laboratorios/:id
+Método: `GET`
+
+Endpoint:
+
+```text
+/laboratorios
 ```
 
-Exemplo:
+#### Consultar laboratório por ID
 
-```http
-PUT /laboratorios/1
+Método: `GET`
+
+Endpoint de exemplo:
+
+```text
+/laboratorios/1
+```
+
+#### Atualizar laboratório
+
+Método: `PUT`
+
+Endpoint de exemplo:
+
+```text
+/laboratorios/1
 ```
 
 Corpo da requisição:
 
 ```json
 {
-  "nome": "Laboratório 01",
+  "nome": "Laboratório de Informática",
   "localizacao": "Bloco B",
   "capacidade": 35
 }
 ```
 
-### Deletar laboratório
+#### Excluir laboratório
 
-```http
-DELETE /laboratorios/:id
+Método: `DELETE`
+
+Endpoint de exemplo:
+
+```text
+/laboratorios/1
 ```
 
-Exemplo:
+Quando a exclusão é realizada com sucesso, a API retorna `204 No Content`.
 
-```http
-DELETE /laboratorios/1
-```
+### 9.3. Equipamentos
 
-Quando a exclusão é realizada com sucesso, a API retorna o status `204 No Content`.
+#### Cadastrar equipamento
 
----
+Método: `POST`
 
-## Reservas
+Endpoint:
 
-As rotas de reservas estão definidas no arquivo `reservas.routes.js`.
-
-Atualmente, o arquivo de rotas registra três endpoints:
-
-* Listar reservas;
-* Buscar reserva;
-* Criar reserva.
-
-### Listar reservas
-
-```http
-GET /reservas
-```
-
-Retorna todas as reservas cadastradas.
-
-### Buscar reserva
-
-```http
-GET /reservas/:id
-```
-
-Exemplo:
-
-```http
-GET /reservas/1
-```
-
-Caso a reserva não seja encontrada:
-
-```json
-{
-  "erro": "Reserva não encontrada"
-}
-```
-
-### Criar reserva
-
-```http
-POST /reservas
+```text
+/equipamentos
 ```
 
 Corpo da requisição:
 
 ```json
 {
-  "usuario_id": 1,
-  "laboratorio_id": 1,
-  "inicio": "2026-10-05 14:00",
-  "fim": "2026-10-05 16:00",
-  "motivo": "Aula prática"
+  "nome": "Projetor",
+  "descricao": "Projetor multimídia",
+  "quantidade": 5
 }
 ```
 
-Também é possível realizar uma reserva utilizando um equipamento:
+Os campos `nome` e `quantidade` são obrigatórios. O campo `descricao` pode ser informado para detalhar o equipamento.
+
+#### Listar equipamentos
+
+Método: `GET`
+
+Endpoint:
+
+```text
+/equipamentos
+```
+
+Retorna a lista dos equipamentos cadastrados.
+
+#### Consultar equipamento por ID
+
+Método: `GET`
+
+Endpoint de exemplo:
+
+```text
+/equipamentos/1
+```
+
+#### Atualizar equipamento
+
+Método: `PUT`
+
+Endpoint de exemplo:
+
+```text
+/equipamentos/1
+```
+
+Corpo da requisição:
 
 ```json
 {
-  "usuario_id": 1,
-  "equipamento_id": 1,
-  "inicio": "2026-10-05 14:00",
-  "fim": "2026-10-05 16:00",
-  "motivo": "Apresentação"
+  "nome": "Projetor multimídia",
+  "descricao": "Projetor para apresentações",
+  "quantidade": 8
 }
 ```
 
-É necessário informar:
+Os campos `nome` e `quantidade` são obrigatórios.
 
-* `usuario_id`;
-* `inicio`;
-* `fim`;
-* pelo menos um recurso: `laboratorio_id` ou `equipamento_id`.
+#### Excluir equipamento
 
-### Validações da reserva
+Método: `DELETE`
 
-A API verifica se:
+Endpoint de exemplo:
 
-* O usuário informado existe;
-* O laboratório informado existe;
-* O equipamento informado existe;
-* O horário inicial é anterior ao horário final;
-* O laboratório ou equipamento não possui outra reserva no mesmo período;
-* O usuário não possui outra reserva no mesmo período.
-
-Caso não seja informado um laboratório ou equipamento:
-
-```json
-{
-  "erro": "Informe um laboratório ou um equipamento"
-}
+```text
+/equipamentos/1
 ```
 
-Caso o horário seja inválido:
+Quando a exclusão é realizada com sucesso, a API retorna `204 No Content`.
 
-```json
-{
-  "erro": "O início deve ser anterior ao fim"
-}
-```
+## 10. Códigos de resposta HTTP
 
-Caso o usuário não exista:
+| Código | Significado |
+|---|---|
+| `200 OK` | Requisição realizada com sucesso |
+| `201 Created` | Recurso criado com sucesso |
+| `204 No Content` | Operação realizada sem conteúdo de resposta |
+| `400 Bad Request` | Dados inválidos ou obrigatórios ausentes |
+| `404 Not Found` | Recurso não encontrado |
 
-```json
-{
-  "erro": "Usuário não encontrado"
-}
-```
+As respostas de erro são retornadas em JSON, com uma mensagem no campo `erro`.
 
-Caso o laboratório não exista:
-
-```json
-{
-  "erro": "Laboratório não encontrado"
-}
-```
-
-Caso o equipamento não exista:
+Exemplo:
 
 ```json
 {
@@ -423,134 +398,52 @@ Caso o equipamento não exista:
 }
 ```
 
-Caso o recurso já esteja reservado:
+## 11. Organização do projeto
 
-```json
-{
-  "erro": "O laboratório ou equipamento já está reservado nesse período"
-}
-```
-
-Caso o usuário já possua uma reserva no mesmo período:
-
-```json
-{
-  "erro": "O usuário já possui uma reserva nesse período"
-}
-```
-
----
-
-## Regras de negócio
-
-### Regra 1 — Conflito de recurso
-
-Não pode existir outra reserva para o mesmo laboratório ou equipamento em um horário sobreposto.
-
-As reservas com status `PENDENTE` ou `APROVADA` são consideradas na verificação de conflito.
-
-Por exemplo, se um laboratório estiver reservado das 14:00 às 16:00, não será possível criar outra reserva para esse mesmo laboratório durante um período que se sobreponha a esse horário.
-
-### Regra 2 — Conflito de horário do usuário
-
-Um mesmo usuário não pode possuir duas reservas em horários sobrepostos.
-
-As reservas com status `PENDENTE` ou `APROVADA` são consideradas nessa verificação.
-
-### Regra 3 — Aprovação
-
-O controller de reservas possui uma função para aprovação de reservas.
-
-Somente usuários com perfil `PROFESSOR` ou `TECNICO` podem aprovar uma reserva.
-
-No entanto, a rota de aprovação ainda não está registrada no arquivo `reservas.routes.js`.
-
-O mesmo ocorre com as funções de recusar e cancelar reservas.
-
----
-
-## Funções de reservas ainda não expostas por rotas
-
-O arquivo `reservas.controller.js` possui as seguintes funções:
+A estrutura principal da aplicação está organizada da seguinte maneira:
 
 ```text
-aprovarReserva
-recusarReserva
-cancelarReserva
+api-reservas/
+├── src/
+│   ├── app.js
+│   ├── controllers/
+│   │   ├── usuarios.controller.js
+│   │   ├── laboratorios.controller.js
+│   │   └── equipamentos.controller.js
+│   ├── routes/
+│   │   ├── usuarios.routes.js
+│   │   ├── laboratorios.routes.js
+│   │   └── equipamentos.routes.js
+│   └── database/
+│       └── database.js
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
-Porém, atualmente o arquivo `reservas.routes.js` registra somente:
+### Responsabilidade dos arquivos
 
-```text
-GET /
-GET /:id
-POST /
-```
+- `app.js`: configura o Express, registra as rotas e inicia o servidor.
+- `controllers/`: contém as funções responsáveis pelas operações de cada recurso.
+- `routes/`: define os métodos HTTP e associa cada endpoint à função correspondente do controller.
+- `database/`: contém a configuração de acesso ao banco de dados.
+- `package.json`: define as dependências e os comandos de execução.
+- `README.md`: documenta o funcionamento e a utilização da API.
 
-Portanto, as funções de aprovação, recusa e cancelamento existem no controller, mas ainda não podem ser acessadas por endpoints da API enquanto não forem adicionadas às rotas.
+## 12. Banco de dados
 
----
+A aplicação utiliza SQLite por meio da biblioteca `better-sqlite3`. Os controllers consultam e modificam os registros utilizando comandos SQL.
 
-## Métodos HTTP utilizados
+As entidades principais relacionadas ao objetivo do projeto são usuários, laboratórios, equipamentos e reservas. Entretanto, os endpoints de reservas ainda não estão registrados na configuração atual do servidor.
 
-| Método | Função                |
-| ------ | --------------------- |
-| GET    | Consultar informações |
-| POST   | Criar informações     |
-| PUT    | Atualizar informações |
-| DELETE | Deletar informações   |
+## 13. Estado atual do projeto
 
-## Resumo dos endpoints
+O projeto possui operações de cadastro, consulta, atualização e exclusão para usuários, laboratórios e equipamentos.
 
-| Método | Endpoint            | Descrição                    |
-| ------ | ------------------- | ---------------------------- |
-| GET    | `/usuarios`         | Lista todos os usuários      |
-| GET    | `/usuarios/:id`     | Busca um usuário pelo ID     |
-| POST   | `/usuarios`         | Cadastra um usuário          |
-| PUT    | `/usuarios/:id`     | Atualiza um usuário          |
-| DELETE | `/usuarios/:id`     | Deleta um usuário            |
-| GET    | `/laboratorios`     | Lista todos os laboratórios  |
-| GET    | `/laboratorios/:id` | Busca um laboratório pelo ID |
-| POST   | `/laboratorios`     | Cadastra um laboratório      |
-| PUT    | `/laboratorios/:id` | Atualiza um laboratório      |
-| DELETE | `/laboratorios/:id` | Deleta um laboratório        |
-| GET    | `/reservas`         | Lista todas as reservas      |
-| GET    | `/reservas/:id`     | Busca uma reserva pelo ID    |
-| POST   | `/reservas`         | Cria uma reserva             |
+A implementação das rotas de reservas ainda precisa ser integrada ao arquivo principal da aplicação para que essas operações possam ser acessadas por requisições HTTP.
 
-## Status HTTP utilizados
+## 14. Considerações finais
 
-A API utiliza diferentes códigos de status para indicar o resultado das operações.
+A API organiza o gerenciamento de recursos institucionais por meio de endpoints REST e utiliza SQLite para persistir os dados. Sua estrutura separa as rotas, os controllers e o acesso ao banco de dados, facilitando a manutenção e a ampliação das funcionalidades.
 
-| Código | Significado                                        |
-| ------ | -------------------------------------------------- |
-| `201`  | Recurso criado com sucesso                         |
-| `204`  | Operação realizada sem conteúdo de resposta        |
-| `400`  | Requisição inválida ou dados obrigatórios ausentes |
-| `403`  | Usuário sem permissão para realizar a operação     |
-| `404`  | Recurso não encontrado                             |
-| `409`  | Conflito com uma reserva existente                 |
-
-## Testes automatizados
-
-Como recurso opcional, poderão ser desenvolvidos testes automatizados para verificar as principais funcionalidades da API.
-
-Entre os testes que podem ser realizados estão:
-
-* Cadastro de usuários;
-* Consulta de usuários;
-* Atualização de usuários;
-* Exclusão de usuários;
-* Cadastro de laboratórios;
-* Consulta de laboratórios;
-* Atualização de laboratórios;
-* Exclusão de laboratórios;
-* Criação de reservas;
-* Consulta de reservas;
-* Validação de horários;
-* Verificação de conflitos de reservas;
-* Verificação de conflitos de horário do usuário.
-
-## Status do projeto
-
-Projeto em desenvolvimento.
+A documentação descreve as rotas atualmente registradas na aplicação, sem apresentar endpoints de reservas que ainda não estão disponíveis.
