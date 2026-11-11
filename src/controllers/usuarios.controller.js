@@ -1,111 +1,44 @@
-const db = require("../database/database");
+const service = require("../services/usuarios.service");
 
-function listarUsuarios(req, res) {
-    const usuarios = db
-        .prepare("SELECT * FROM usuarios")
-        .all();
-
-    res.json(usuarios);
-}
-
-function buscarUsuario(req, res) {
-    const { id } = req.params;
-
-    const usuario = db
-        .prepare("SELECT * FROM usuarios WHERE id = ?")
-        .get(id);
-
-    if (!usuario) {
-        return res.status(404).json({
-            erro: "Usuário não encontrado"
-        });
-    }
-
-    res.json(usuario);
-}
-
-function criarUsuario(req, res) {
-    const { nome, email, perfil } = req.body;
-
-    if (!nome || !email || !perfil) {
-        return res.status(400).json({
-            erro: "Nome, email e perfil são obrigatórios"
-        });
-    }
-
+async function listarUsuarios(req, res) {
     try {
-        const resultado = db
-            .prepare(`
-                INSERT INTO usuarios (nome, email, perfil)
-                VALUES (?, ?, ?)
-            `)
-            .run(nome, email, perfil);
-
-        const usuario = db
-            .prepare("SELECT * FROM usuarios WHERE id = ?")
-            .get(resultado.lastInsertRowid);
-
-        res.status(201).json(usuario);
-    } catch (erro) {
-        res.status(400).json({
-            erro: "Não foi possível criar o usuário"
-        });
+        res.json(await service.listar());
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
     }
 }
 
-function atualizarUsuario(req, res) {
-    const { id } = req.params;
-    const { nome, email, perfil } = req.body;
-
-    if (!nome || !email || !perfil) {
-        return res.status(400).json({
-            erro: "Nome, email e perfil são obrigatórios"
-        });
-    }
-
-    const usuarioExistente = db
-        .prepare("SELECT * FROM usuarios WHERE id = ?")
-        .get(id);
-
-    if (!usuarioExistente) {
-        return res.status(404).json({
-            erro: "Usuário não encontrado"
-        });
-    }
-
+async function buscarUsuario(req, res) {
     try {
-        db.prepare(`
-            UPDATE usuarios
-            SET nome = ?, email = ?, perfil = ?
-            WHERE id = ?
-        `).run(nome, email, perfil, id);
-
-        const usuarioAtualizado = db
-            .prepare("SELECT * FROM usuarios WHERE id = ?")
-            .get(id);
-
-        res.json(usuarioAtualizado);
-    } catch (erro) {
-        res.status(400).json({
-            erro: "Não foi possível atualizar o usuário"
-        });
+        res.json(await service.buscar(req.params.id));
+    } catch (e) {
+        res.status(e.message.includes("não encontrado") ? 404 : 400).json({ erro: e.message });
     }
 }
 
-function deletarUsuario(req, res) {
-    const { id } = req.params;
-
-    const resultado = db
-        .prepare("DELETE FROM usuarios WHERE id = ?")
-        .run(id);
-
-    if (resultado.changes === 0) {
-        return res.status(404).json({
-            erro: "Usuário não encontrado"
-        });
+async function criarUsuario(req, res) {
+    try {
+        res.status(201).json(await service.criar(req.body));
+    } catch (e) {
+        res.status(400).json({ erro: e.message });
     }
+}
 
-    res.status(204).send();
+async function atualizarUsuario(req, res) {
+    try {
+        res.json(await service.atualizar(req.params.id, req.body));
+    } catch (e) {
+        res.status(e.message.includes("não encontrado") ? 404 : 400).json({ erro: e.message });
+    }
+}
+
+async function deletarUsuario(req, res) {
+    try {
+        await service.deletar(req.params.id);
+        res.status(204).send();
+    } catch (e) {
+        res.status(e.message.includes("não encontrado") ? 404 : 400).json({ erro: e.message });
+    }
 }
 
 module.exports = {

@@ -1,14 +1,22 @@
-const Database = require("better-sqlite3");
-const fs = require("fs");
+const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
-const db = new Database("src/database/database.sqlite");
+const client = new MongoClient(process.env.MONGODB_URI);
 
-db.pragma("foreign_keys = ON");
+let db;
 
-const schema = fs.readFileSync("src/database/schema.sql", "utf8");
+async function connectDB() {
+    await client.connect();
+    db = client.db(process.env.MONGO_DB);
+    console.log("MongoDB conectado com sucesso!");
+}
 
-db.exec(schema);
+function getDB() {
+    if (!db) {
+        throw new Error("Banco de dados não conectado");
+    }
 
-console.log("Banco de dados conectado e tabelas verificadas.");
+    return db;
+}
 
-module.exports = db;
+module.exports = { connectDB, getDB };
